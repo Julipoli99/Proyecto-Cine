@@ -2,17 +2,25 @@
 <template>
   <nav class="navbar">
     <ul class="nav-links">
-      <li><router-link to="/peliculas">PELICULAS</router-link></li>
+
+      <li><router-link to="/peliculas">CARTELERA</router-link></li>
       <li><router-link to="/">HOME</router-link></li>
+      
       <li>
         <div class="logo">
           <img src="logo.png" alt="Logo" />
         </div>
       </li>
-      <li><router-link to="/Salas">SALAS</router-link></li>
-      <li v-if="!usrStore.isLogged"><router-link to="/login">login</router-link></li>
-      <li v-if="usrStore.isLogged"><router-link to="/login">{{usrStore.currentUser.name}}</router-link></li>
-      <!-- <li><router-link to="/Contacto">CONTACTO</router-link></li> -->
+
+      <div v-if="usrStore.isLogged" style="display: flex;">
+        <li><router-link to="/reserva">RESERVAS</router-link></li>
+        <li ><router-link to="/login">{{ usrStore.currentUser.name }}</router-link></li>
+      </div>
+
+      <div v-else style="display: flex;">
+        <li><router-link to="/create">REGISTRARSE</router-link></li>
+        <li><router-link to="/login">LOGIN</router-link></li>
+      </div>
     </ul>
   </nav>
 </template>
@@ -21,11 +29,11 @@
 import { usrStore } from '../components/store/usrStore'
 
 export default {
-    data() {
-        return {
-            usrStore: usrStore(),
-        }
-    },
+  data() {
+    return {
+      usrStore: usrStore(),
+    }
+  },
 
 }
 </script>
@@ -97,8 +105,9 @@ li {
     0 0 30px rgb(224, 224, 224);
   background: rgb(255, 255, 255);
 }
-.router-link-active{
-  font-weight:800 !important;
+
+.router-link-active {
+  font-weight: 800 !important;
   color: #000 !important;
   /*box-shadow: 0 0 5px rgb(146, 146, 146),
     0 0 15px rgb(104, 104, 104),

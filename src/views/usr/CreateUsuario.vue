@@ -1,25 +1,36 @@
 <template>
     <div v-if="!usrStore.isLogged" class="container">
-        <h1>Iniciar Sesión</h1>
+        <h1>Registrarse</h1>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="nombre" placeholder="name@example.com" v-model="this.nombre">
+            <label for="nombre">Nombre</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="Apellido" placeholder="name@example.com" v-model="this.apellido">
+            <label for="Apellido">Apellido</label>
+        </div>
 
         <div class="form-floating">
             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" v-model="this.email">
             <label for="floatingInput">Email</label>
         </div>
+
         <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
                 v-model="this.password">
-            <label for="floatingPassword">contraseña</label>
+            <label for="floatingPassword">Contraseña</label>
         </div>
 
-        <button type="submit" class="btn btn-success" @click="ingresar">Iniciar Sesión</button>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword2" placeholder="Password"
+                v-model="this.password2">
+            <label for="floatingPassword2">Confirmar Contraseña</label>
+        </div>
 
-        <div v-if="this.error1" class="alert alert-danger" role="alert">
-            email o contraseña incorrectos
-        </div>
-        <div v-if="this.error2" class="alert alert-danger" role="alert">
-            email o contraseña no ingreados
-        </div>
+        <button type="submit" class="btn btn-success" @click="ingresar">Registrarse</button>
+        
+
     </div>
 
     <div v-if="usrStore.isLogged" class="container">
@@ -37,28 +48,21 @@ export default {
         return {
             router: useRouter(),
             usrStore: usrStore(),
-            error1: false,
-            error2: false,
+
+            nombre: "",
+            apellido: "",
             email: "",
             password: "",
+            password2: "",
 
         }
     },
     methods: {
 
-        async ingresar() {
-            this.error1 = false;
-            if (this.email == "" || this.password == "") {
-                this.error2 = true;
-            } else {
-                this.error2 = false;
-                let res = await this.usrStore.logIn(this.email, this.password)
-                if (res == false) {
-                    this.error1 = true;
-                }
-            }
+        async Registrarse() {
+
         },
-        
+
         salir() {
             // metodo salir de usuario
             this.usrStore.logOut()
@@ -66,7 +70,7 @@ export default {
 
         navegar() {
             this.router.push(
-                { path: "/create" }
+                { path: "/login" }
             )
         }
     }

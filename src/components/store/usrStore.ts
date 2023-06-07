@@ -1,8 +1,11 @@
 import { defineStore } from "pinia";
 
+import { reservasStore } from './reservasStore'
+
 export const usrStore = defineStore('usuariosStore', {
     state: () => ({
         currentUser: null,
+        reservasStore: reservasStore()
 
 
     }),
@@ -38,6 +41,9 @@ export const usrStore = defineStore('usuariosStore', {
                     encontrado = true;
                     this.currentUser = usuario;
                     window.localStorage.setItem("usuario", JSON.stringify(usuario))
+
+                    this.reservasStore.buscarReservas(usuario.id)
+
                 }
                 index++;
             }
